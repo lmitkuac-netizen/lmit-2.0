@@ -21,8 +21,15 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
-          <div className="flex-shrink-0">
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800">
+          <div className="flex-shrink-0 flex items-center gap-3">
+            {labInfo?.logo_image && (
+              <img 
+                src={labInfo.logo_image} 
+                alt="Lab Logo" 
+                className="h-10 w-10 object-contain rounded"
+              />
+            )}
+            <h1 className="text-lg sm:text-xl font-bold text-slate-800 leading-tight">
               {siteName}
             </h1>
           </div>

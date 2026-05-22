@@ -94,6 +94,7 @@ class LabInfo(BaseModel):
     phone: str
     address: str
     hero_background_image: str = DEFAULT_HERO_BACKGROUND
+    logo_image: str = ""
 
 
 class ResearchFocus(BaseModel):

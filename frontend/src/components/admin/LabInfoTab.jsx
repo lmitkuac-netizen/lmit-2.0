@@ -88,6 +88,15 @@ const LabInfoTab = () => {
           </div>
           <div>
             <ImageUploader
+              label="Lab Logo"
+              value={data.logo_image || ''}
+              onChange={(v) => setData({ ...data, logo_image: v })}
+              aspect={1}
+            />
+            <p className="text-xs text-slate-500 mt-1">Upload your lab logo. It will appear in the navigation bar and footer. Square format recommended.</p>
+          </div>
+          <div>
+            <ImageUploader
               label="Homepage hero background"
               value={data.hero_background_image || ''}
               onChange={(v) => setData({ ...data, hero_background_image: v })}

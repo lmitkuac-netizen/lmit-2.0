@@ -13,7 +13,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-bold mb-4">{siteName}</h3>
+            <div className="flex items-center gap-3 mb-4">
+              {labInfo?.logo_image && (
+                <img 
+                  src={labInfo.logo_image} 
+                  alt="Lab Logo" 
+                  className="h-12 w-12 object-contain rounded bg-white/10 p-1"
+                />
+              )}
+              <h3 className="text-xl font-bold">{siteName}</h3>
+            </div>
             <p className="text-gray-300 leading-relaxed">
               {labInfo?.tagline ||
                 'Advancing materials science, nanotechnology, and smart agriculture through innovative research and collaboration.'}
