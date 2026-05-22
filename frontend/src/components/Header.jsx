@@ -26,7 +26,7 @@ const Header = () => {
               <img 
                 src={labInfo.logo_image} 
                 alt="Lab Logo" 
-                className="h-10 sm:h-12 w-auto object-contain rounded"
+                className="h-10 sm:h-12 w-auto object-contain rounded translate-y-1"
               />
             )}
             <h1 className="text-lg sm:text-xl font-bold text-slate-800 leading-tight">
