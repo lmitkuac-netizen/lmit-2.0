@@ -6,7 +6,8 @@ import { Textarea } from '../ui/textarea';
 import { Card, CardContent } from '../ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '../ui/alert-dialog';
-import { Plus, Pencil, Trash2, Loader2, GraduationCap } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, GraduationCap, GripVertical, ArrowUpDown } from 'lucide-react';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { labApi, adminApi, formatApiErrorDetail } from '../../services/api';
 import ImageUploader from '../ImageUploader';
 import CvUploader from '../CvUploader';
@@ -22,6 +23,8 @@ const LabMembersTab = () => {
   const [form, setForm] = useState(empty);
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [isReordering, setIsReordering] = useState(false);
+  const [hasUnsavedOrder, setHasUnsavedOrder] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -76,6 +79,30 @@ const LabMembersTab = () => {
     }
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const newItems = Array.from(items);
+    const [reorderedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, reorderedItem);
+    setItems(newItems);
+    setHasUnsavedOrder(true);
+  };
+
+  const handleSaveOrder = async () => {
+    setSaving(true);
+    try {
+      await adminApi.reorderLabMembers(items.map(item => item.id));
+      toast.success('Order saved successfully');
+      setHasUnsavedOrder(false);
+      setIsReordering(false);
+      await load();
+    } catch (err) {
+      toast.error('Failed to save order');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -83,13 +110,67 @@ const LabMembersTab = () => {
           <h2 className="text-2xl font-bold text-slate-800">Lab Members</h2>
           <p className="text-sm text-slate-500">Manage team profiles</p>
         </div>
-        <Button onClick={openCreate} data-testid="add-member-button" className="bg-teal-600 hover:bg-teal-700 text-white">
-          <Plus className="w-4 h-4 mr-2" /> Add Member
-        </Button>
+        <div className="flex gap-2">
+          {!isReordering && items.length > 1 && (
+            <Button variant="outline" onClick={() => setIsReordering(true)} className="text-slate-700">
+              <ArrowUpDown className="w-4 h-4 mr-2" /> Reorder
+            </Button>
+          )}
+          <Button onClick={openCreate} data-testid="add-member-button" className="bg-teal-600 hover:bg-teal-700 text-white" disabled={isReordering}>
+            <Plus className="w-4 h-4 mr-2" /> Add Member
+          </Button>
+        </div>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-teal-600" /></div>
+      ) : isReordering ? (
+        <div className="bg-slate-50 p-4 sm:p-6 rounded-lg border border-slate-200">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="font-semibold text-slate-800">Drag items to reorder</h3>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => { setIsReordering(false); load(); setHasUnsavedOrder(false); }}>Cancel</Button>
+              <Button onClick={handleSaveOrder} disabled={!hasUnsavedOrder || saving} className="bg-teal-600 hover:bg-teal-700 text-white">
+                {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+                Save Order
+              </Button>
+            </div>
+          </div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="members">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-3">
+                  {items.map((m, index) => (
+                    <Draggable key={m.id.toString()} draggableId={m.id.toString()} index={index}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className={`flex items-center gap-4 bg-white p-3 rounded-lg border shadow-sm transition-shadow ${snapshot.isDragging ? 'shadow-md border-teal-300' : 'border-gray-200'}`}
+                        >
+                          <div {...provided.dragHandleProps} className="cursor-grab text-gray-400 hover:text-teal-600 p-2 -ml-2">
+                            <GripVertical size={20} />
+                          </div>
+                          <div className={`w-12 h-12 rounded bg-gray-100 overflow-hidden flex-shrink-0 ${m.is_alumni ? 'grayscale' : ''}`}>
+                            <img src={m.image} alt={m.name} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-slate-800 truncate flex items-center gap-2">
+                              {m.name} 
+                              {m.is_alumni && <span className="text-[10px] uppercase font-bold tracking-wider bg-slate-800 text-white px-2 py-0.5 rounded-full">Alumni</span>}
+                            </p>
+                            <p className="text-sm text-slate-500 truncate">{m.title}</p>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((m) => (

@@ -77,6 +77,7 @@ export const adminApi = {
   createLabMember: async (data) => (await apiClient.post('/admin/lab-members', data)).data,
   updateLabMember: async (id, data) => (await apiClient.put(`/admin/lab-members/${id}`, data)).data,
   deleteLabMember: async (id) => (await apiClient.delete(`/admin/lab-members/${id}`)).data,
+  reorderLabMembers: async (member_ids) => (await apiClient.put('/admin/lab-members/reorder/bulk', { member_ids })).data,
 
   // YouTube Videos
   createYoutubeVideo: async (data) => (await apiClient.post('/admin/youtube-videos', data)).data,

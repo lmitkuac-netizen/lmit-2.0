@@ -146,6 +146,7 @@ class LabMember(BaseModel):
     cv_url: str = ""
     is_alumni: bool = False
     current_workplace: str = ""
+    sort_order: int = 0
 
 
 class LabMemberInput(BaseModel):
@@ -160,7 +161,10 @@ class LabMemberInput(BaseModel):
     cv_url: str = ""
     is_alumni: bool = False
     current_workplace: str = ""
+    sort_order: int = 0
 
+class LabMemberReorderInput(BaseModel):
+    member_ids: List[int]
 
 class YoutubeVideo(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -275,11 +279,12 @@ async def get_publications(limit: Optional[int] = None, year: Optional[int] = No
 
 @api_router.get("/lab-members", response_model=List[LabMember])
 async def get_lab_members():
-    items = await db.lab_members.find({}, {"_id": 0}).sort("id", 1).to_list(100)
+    items = await db.lab_members.find({}, {"_id": 0}).sort([("sort_order", 1), ("id", 1)]).to_list(100)
     for item in items:
         item.setdefault("cv_url", "")
         item.setdefault("is_alumni", False)
         item.setdefault("current_workplace", "")
+        item.setdefault("sort_order", 0)
     return items
 
 
@@ -430,6 +435,13 @@ async def update_lab_member(item_id: int, item: LabMemberInput, admin: dict = De
         raise HTTPException(status_code=404, detail="Lab member not found")
     updated = await db.lab_members.find_one({"id": item_id}, {"_id": 0})
     return updated
+
+
+@admin_router.put("/lab-members/reorder/bulk")
+async def reorder_lab_members(payload: LabMemberReorderInput, admin: dict = Depends(get_current_admin)):
+    for index, member_id in enumerate(payload.member_ids):
+        await db.lab_members.update_one({"id": member_id}, {"$set": {"sort_order": index}})
+    return {"success": True}
 
 
 @admin_router.delete("/lab-members/{item_id}")
