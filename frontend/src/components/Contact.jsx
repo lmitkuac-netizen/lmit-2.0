@@ -4,6 +4,34 @@ import { Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { labApi } from '../services/api';
 import ScrollReveal from './ui/ScrollReveal';
 
+const getMapQuery = (address) => {
+  if (!address) return '';
+  
+  // Split by comma first (common for English addresses)
+  const commaParts = address.split(',');
+  if (commaParts.length > 1) {
+    const kuIndex = commaParts.findIndex(p => 
+      p.toLowerCase().includes('kasetsart') || 
+      p.includes('เกษตรศาสตร์')
+    );
+    if (kuIndex !== -1) {
+      return commaParts.slice(0, kuIndex + 1).join(',').trim();
+    }
+  }
+
+  // Split by space (common for Thai addresses)
+  const spaceParts = address.split(/\s+/);
+  const kuSpaceIndex = spaceParts.findIndex(p => 
+    p.toLowerCase().includes('kasetsart') || 
+    p.includes('เกษตรศาสตร์')
+  );
+  if (kuSpaceIndex !== -1) {
+    return spaceParts.slice(0, kuSpaceIndex + 1).join(' ').trim();
+  }
+
+  return address;
+};
+
 const Contact = () => {
   const [labInfo, setLabInfo] = useState(null);
 
@@ -89,7 +117,7 @@ const Contact = () => {
                     style={{ border: 0, minHeight: '400px' }}
                     loading="lazy"
                     allowFullScreen
-                    src={`https://maps.google.com/maps?q=${encodeURIComponent(labInfo.address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(getMapQuery(labInfo.address))}&t=&z=18&ie=UTF8&iwloc=A&output=embed`}
                   ></iframe>
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 text-slate-500 min-h-[400px]">
