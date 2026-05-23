@@ -3,6 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Loader2, ArrowRight } from 'lucide-react';
 import { labApi } from '../services/api';
+import ScrollReveal from './ui/ScrollReveal';
 import {
   Dialog,
   DialogContent,
@@ -27,16 +28,18 @@ const ResearchFocus = () => {
   return (
     <section id="research" className="py-20 bg-white" data-testid="research-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="research-heading">
-            Research Focus
-          </h2>
-          <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Our laboratory pursues cutting-edge research across multiple disciplines,
-            bridging fundamental science with practical applications.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="research-heading">
+              Research Focus
+            </h2>
+            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+              Our laboratory pursues cutting-edge research across multiple disciplines,
+              bridging fundamental science with practical applications.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {loading ? (
           <div className="flex justify-center py-12">
@@ -45,45 +48,46 @@ const ResearchFocus = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {researchFocus.slice(0, visibleCount).map((focus) => (
-                <Card 
-                  key={focus.id} 
-                  data-testid={`research-card-${focus.id}`}
-                  className="group overflow-hidden border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col h-full"
-                  onClick={() => setSelectedFocus(focus)}
-                >
-                  <div className="relative h-64 shrink-0 overflow-hidden">
-                    <img
-                      src={focus.image}
-                      alt={focus.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                    <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white pr-4">
-                      {focus.title}
-                    </h3>
-                  </div>
+              {researchFocus.slice(0, visibleCount).map((focus, index) => (
+                <ScrollReveal key={focus.id} delay={(index % 2) * 150}>
+                  <Card 
+                    data-testid={`research-card-${focus.id}`}
+                    className="group overflow-hidden border-gray-200 hover-card-glow cursor-pointer flex flex-col h-full"
+                    onClick={() => setSelectedFocus(focus)}
+                  >
+                    <div className="relative h-64 shrink-0 overflow-hidden">
+                      <img
+                        src={focus.image}
+                        alt={focus.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                      <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white pr-4">
+                        {focus.title}
+                      </h3>
+                    </div>
 
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <p className="text-slate-600 mb-4 leading-relaxed line-clamp-3">
-                      {focus.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4 mt-auto">
-                      {focus.keywords.map((keyword, index) => (
-                        <Badge 
-                          key={index} 
-                          variant="secondary" 
-                          className="bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors duration-200"
-                        >
-                          {keyword}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="text-teal-600 font-medium flex items-center group-hover:text-teal-700 transition-colors">
-                      Read more <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </CardContent>
-                </Card>
+                    <CardContent className="p-6 flex flex-col flex-grow">
+                      <p className="text-slate-600 mb-4 leading-relaxed line-clamp-3">
+                        {focus.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4 mt-auto">
+                        {focus.keywords.map((keyword, index) => (
+                          <Badge 
+                            key={index} 
+                            variant="secondary" 
+                            className="bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors duration-200"
+                          >
+                            {keyword}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="text-teal-600 font-medium flex items-center group-hover:text-teal-700 transition-colors">
+                        Read more <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </ScrollReveal>
               ))}
             </div>
 

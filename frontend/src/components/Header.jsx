@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLabInfo } from '../context/LabInfoContext';
@@ -6,7 +6,20 @@ import { useLabInfo } from '../context/LabInfoContext';
 const Header = () => {
   const { labInfo } = useLabInfo();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const siteName = labInfo?.name || 'Laboratory Website';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -16,47 +29,59 @@ const Header = () => {
     }
   };
 
+  const navItemClass = `px-4 py-2 font-medium transition-all duration-200 ${
+    isScrolled 
+      ? 'text-slate-700 hover:text-teal-600' 
+      : 'text-white/90 hover:text-teal-300'
+  }`;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex items-center ${
+      isScrolled 
+        ? 'bg-white/90 backdrop-blur-md border-b border-gray-200/50 shadow-sm h-16' 
+        : 'bg-transparent border-transparent h-20'
+    }`}>
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center w-full">
           {/* Logo/Brand */}
           <div className="flex-shrink-0 flex items-center gap-3">
             {labInfo?.logo_image && (
               <img 
                 src={labInfo.logo_image} 
                 alt="Lab Logo" 
-                className="h-10 sm:h-12 w-auto object-contain rounded translate-y-1"
+                className="h-10 sm:h-12 w-auto object-contain rounded transition-transform"
               />
             )}
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800 leading-tight">
+            <h1 className={`text-lg sm:text-xl font-bold leading-tight transition-colors duration-300 ${
+              isScrolled ? 'text-slate-800' : 'text-white'
+            }`}>
               {siteName}
             </h1>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-1">
+          <nav className="hidden md:flex items-center space-x-1">
             <button
               onClick={() => scrollToSection('research')}
-              className="px-4 py-2 text-slate-700 hover:text-teal-600 font-medium transition-colors duration-200"
+              className={navItemClass}
             >
               Research
             </button>
             <button
               onClick={() => scrollToSection('publications')}
-              className="px-4 py-2 text-slate-700 hover:text-teal-600 font-medium transition-colors duration-200"
+              className={navItemClass}
             >
               Publications
             </button>
             <button
               onClick={() => scrollToSection('team')}
-              className="px-4 py-2 text-slate-700 hover:text-teal-600 font-medium transition-colors duration-200"
+              className={navItemClass}
             >
               Team
             </button>
             <button
               onClick={() => scrollToSection('news')}
-              className="px-4 py-2 text-slate-700 hover:text-teal-600 font-medium transition-colors duration-200"
+              className={navItemClass}
             >
               News
             </button>
@@ -64,7 +89,11 @@ const Header = () => {
               onClick={() => scrollToSection('contact')}
               className="ml-2"
             >
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white transition-colors duration-200">
+              <Button className={`transition-all duration-300 rounded-full px-6 ${
+                isScrolled
+                  ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-md'
+                  : 'bg-white/15 hover:bg-white/25 text-white backdrop-blur-sm border border-white/25 shadow-sm'
+              }`}>
                 Contact
               </Button>
             </button>
@@ -72,7 +101,9 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-slate-700"
+            className={`md:hidden p-2 transition-colors duration-300 ${
+              isScrolled ? 'text-slate-700' : 'text-white'
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -82,29 +113,29 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="absolute top-full left-0 right-0 bg-white border-t border-gray-200 shadow-xl md:hidden">
           <nav className="px-4 py-4 space-y-2">
             <button
               onClick={() => scrollToSection('research')}
-              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-50 rounded-md transition-colors duration-200"
+              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 rounded-md transition-colors duration-200"
             >
               Research
             </button>
             <button
               onClick={() => scrollToSection('publications')}
-              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-50 rounded-md transition-colors duration-200"
+              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 rounded-md transition-colors duration-200"
             >
               Publications
             </button>
             <button
               onClick={() => scrollToSection('team')}
-              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-50 rounded-md transition-colors duration-200"
+              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 rounded-md transition-colors duration-200"
             >
               Team
             </button>
             <button
               onClick={() => scrollToSection('news')}
-              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-50 rounded-md transition-colors duration-200"
+              className="block w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 rounded-md transition-colors duration-200"
             >
               News
             </button>

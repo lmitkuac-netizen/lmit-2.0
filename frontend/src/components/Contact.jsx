@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { labApi } from '../services/api';
+import ScrollReveal from './ui/ScrollReveal';
 
 const Contact = () => {
   const [labInfo, setLabInfo] = useState(null);
@@ -15,20 +16,22 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 bg-white" data-testid="contact-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="contact-heading">
-            Contact Us
-          </h2>
-          <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Interested in collaboration, visiting our lab, or learning more about our research?
-            We'd love to hear from you.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="contact-heading">
+              Contact Us
+            </h2>
+            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+              Interested in collaboration, visiting our lab, or learning more about our research?
+              We'd love to hear from you.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1 space-y-6">
-            <Card className="border-gray-200">
+          <ScrollReveal className="lg:col-span-1" delay={100}>
+            <Card className="border-gray-200 hover-card-glow h-full">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
@@ -73,10 +76,10 @@ const Contact = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </ScrollReveal>
 
-          <div className="lg:col-span-2">
-            <Card className="border-gray-200 h-full overflow-hidden">
+          <ScrollReveal className="lg:col-span-2" delay={250}>
+            <Card className="border-gray-200 h-full overflow-hidden hover-card-glow">
               <div className="w-full h-full min-h-[400px]">
                 {labInfo?.address ? (
                   <iframe
@@ -96,7 +99,7 @@ const Contact = () => {
                 )}
               </div>
             </Card>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
