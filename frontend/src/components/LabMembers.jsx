@@ -3,6 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Mail, Linkedin, GraduationCap, Loader2, FileText, Briefcase } from 'lucide-react';
 import { labApi } from '../services/api';
 import ScrollReveal from './ui/ScrollReveal';
+import Skeleton from './ui/Skeleton';
 
 const LabMembers = () => {
   const [labMembers, setLabMembers] = useState([]);
@@ -37,8 +38,10 @@ const LabMembers = () => {
         </ScrollReveal>
 
         {loading ? (
-          <div className="flex justify-center py-12">
-            <Loader2 className="w-12 h-12 text-teal-600 animate-spin" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-96 w-full rounded-2xl" />
+            ))}
           </div>
         ) : (
           <>

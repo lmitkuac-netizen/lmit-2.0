@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { FileText, ExternalLink, Loader2 } from 'lucide-react';
 import { labApi } from '../services/api';
 import ScrollReveal from './ui/ScrollReveal';
+import Skeleton from './ui/Skeleton';
 
 const Publications = () => {
   const [publications, setPublications] = useState([]);
@@ -34,8 +35,10 @@ const Publications = () => {
         </ScrollReveal>
 
         {loading ? (
-          <div className="flex justify-center py-12">
-            <Loader2 className="w-12 h-12 text-teal-600 animate-spin" />
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-32 w-full rounded-xl" />
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

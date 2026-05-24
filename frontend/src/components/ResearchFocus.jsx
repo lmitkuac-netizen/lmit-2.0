@@ -4,6 +4,7 @@ import { Badge } from './ui/badge';
 import { Loader2, ArrowRight } from 'lucide-react';
 import { labApi } from '../services/api';
 import ScrollReveal from './ui/ScrollReveal';
+import Skeleton from './ui/Skeleton';
 import {
   Dialog,
   DialogContent,
@@ -42,8 +43,10 @@ const ResearchFocus = () => {
         </ScrollReveal>
 
         {loading ? (
-          <div className="flex justify-center py-12">
-            <Loader2 className="w-12 h-12 text-teal-600 animate-spin" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <Skeleton key={i} className="h-[400px] w-full rounded-2xl" />
+            ))}
           </div>
         ) : (
           <>

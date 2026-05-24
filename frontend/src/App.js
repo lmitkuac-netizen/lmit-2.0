@@ -8,10 +8,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { LabInfoProvider } from "./context/LabInfoContext";
 import { Toaster } from "./components/ui/sonner";
+import CustomCursor from "./components/ui/CustomCursor";
 
 function App() {
   return (
     <div className="App">
+      <CustomCursor />
       <BrowserRouter>
         <AuthProvider>
           <LabInfoProvider>
