@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import { useLabInfo } from '../context/LabInfoContext';
 import { motion } from 'framer-motion';
-import MagneticWrapper from './ui/MagneticWrapper';
 
 const Hero = () => {
   const { labInfo, loading } = useLabInfo();
@@ -90,16 +89,14 @@ const Hero = () => {
             </motion.p>
             
             <motion.div variants={itemVariants} className="pt-6 pointer-events-auto">
-              <MagneticWrapper>
-                <button
-                  onClick={scrollToResearch}
-                  data-testid="hero-cta-button"
-                  className="group inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-10 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:scale-105 border border-white/20 hover:border-white/40 shadow-[0_10px_40px_-15px_rgba(13,148,136,0.4)] hover:shadow-[0_20px_50px_-10px_rgba(13,148,136,0.5)] cursor-pointer"
-                >
-                  Explore Our Research
-                  <ChevronDown className="transition-transform duration-300 group-hover:translate-y-1" size={20} />
-                </button>
-              </MagneticWrapper>
+              <button
+                onClick={scrollToResearch}
+                data-testid="hero-cta-button"
+                className="group inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-10 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:scale-105 border border-white/20 hover:border-white/40 shadow-[0_10px_40px_-15px_rgba(13,148,136,0.4)] hover:shadow-[0_20px_50px_-10px_rgba(13,148,136,0.5)] cursor-pointer"
+              >
+                Explore Our Research
+                <ChevronDown className="transition-transform duration-300 group-hover:translate-y-1" size={20} />
+              </button>
             </motion.div>
           </motion.div>
         ) : null}
