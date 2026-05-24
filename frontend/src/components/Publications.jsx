@@ -18,15 +18,15 @@ const Publications = () => {
   }, []);
 
   return (
-    <section id="publications" className="py-20 bg-gray-50" data-testid="publications-section">
+    <section id="publications" className="py-28 bg-gray-50" data-testid="publications-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="publications-heading">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="publications-heading">
               Publications
             </h2>
-            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <div className="heading-accent-bar"></div>
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
               Our research contributions to advancing knowledge in materials science,
               nanotechnology, and smart agriculture systems.
             </p>

@@ -26,15 +26,15 @@ const ResearchFocus = () => {
   }, []);
 
   return (
-    <section id="research" className="py-20 bg-white" data-testid="research-section">
+    <section id="research" className="py-28 bg-white" data-testid="research-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="research-heading">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="research-heading">
               Research Focus
             </h2>
-            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <div className="heading-accent-bar"></div>
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
               Our laboratory pursues cutting-edge research across multiple disciplines,
               bridging fundamental science with practical applications.
             </p>
@@ -52,7 +52,7 @@ const ResearchFocus = () => {
                 <ScrollReveal key={focus.id} delay={(index % 2) * 150}>
                   <Card 
                     data-testid={`research-card-${focus.id}`}
-                    className="group overflow-hidden border-gray-200 hover-card-glow cursor-pointer flex flex-col h-full"
+                    className="group overflow-hidden border-gray-200/60 hover-card-glow cursor-pointer flex flex-col h-full glass-card rounded-2xl"
                     onClick={() => setSelectedFocus(focus)}
                   >
                     <div className="relative h-64 shrink-0 overflow-hidden">

@@ -29,15 +29,15 @@ const News = () => {
   };
 
   return (
-    <section id="news" className="py-20 bg-gray-50" data-testid="news-section">
+    <section id="news" className="py-28 bg-gray-50" data-testid="news-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="news-heading">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="news-heading">
               News & Announcements
             </h2>
-            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <div className="heading-accent-bar"></div>
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
               Stay updated with the latest developments, publications, and achievements
               from our laboratory.
             </p>
@@ -55,7 +55,7 @@ const News = () => {
                 <ScrollReveal key={item.id} delay={(index % 3) * 150}>
                   <Card 
                     data-testid={`news-card-${item.id}`}
-                    className="group overflow-hidden border-gray-200 hover-card-glow bg-white cursor-pointer flex flex-col h-full"
+                    className="group overflow-hidden border-gray-200/60 hover-card-glow bg-white cursor-pointer flex flex-col h-full glass-card rounded-2xl"
                     onClick={() => setSelectedNews(item)}
                   >
                     <div className="relative h-48 shrink-0 overflow-hidden">

@@ -28,15 +28,15 @@ const VideoPreview = () => {
   }
 
   return (
-    <section id="videos" className="py-20 bg-slate-50" data-testid="videos-section">
+    <section id="videos" className="py-28 bg-slate-50" data-testid="videos-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="videos-heading">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="videos-heading">
               Research Videos
             </h2>
-            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6" />
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <div className="heading-accent-bar" />
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
               Watch highlights from our lab, conferences, and outreach activities.
             </p>
           </div>

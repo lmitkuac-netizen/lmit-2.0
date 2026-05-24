@@ -29,16 +29,16 @@ const Header = () => {
     }
   };
 
-  const navItemClass = `px-4 py-2 font-medium transition-all duration-200 ${
+  const navItemClass = `nav-link-underline px-4 py-2 font-medium transition-all duration-300 ${
     isScrolled 
       ? 'text-slate-700 hover:text-teal-600' 
       : 'text-white/90 hover:text-teal-300'
   }`;
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex items-center ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center ${
       isScrolled 
-        ? 'bg-white/90 backdrop-blur-md border-b border-gray-200/50 shadow-sm h-16' 
+        ? 'bg-white/80 backdrop-blur-xl border-b border-gray-200/30 shadow-sm h-16' 
         : 'bg-transparent border-transparent h-20'
     }`}>
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
@@ -49,10 +49,10 @@ const Header = () => {
               <img 
                 src={labInfo.logo_image} 
                 alt="Lab Logo" 
-                className="h-10 sm:h-12 w-auto object-contain rounded transition-transform"
+                className="h-10 sm:h-12 w-auto object-contain rounded transition-all duration-300"
               />
             )}
-            <h1 className={`text-lg sm:text-xl font-bold leading-tight transition-colors duration-300 ${
+            <h1 className={`text-lg sm:text-xl font-bold leading-tight transition-all duration-500 ${
               isScrolled ? 'text-slate-800' : 'text-white'
             }`}>
               {siteName}
@@ -89,10 +89,10 @@ const Header = () => {
               onClick={() => scrollToSection('contact')}
               className="ml-2"
             >
-              <Button className={`transition-all duration-300 rounded-full px-6 ${
+              <Button className={`transition-all duration-500 rounded-full px-6 ${
                 isScrolled
-                  ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-md'
-                  : 'bg-white/15 hover:bg-white/25 text-white backdrop-blur-sm border border-white/25 shadow-sm'
+                  ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-md hover:shadow-lg'
+                  : 'bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 hover:border-white/40'
               }`}>
                 Contact
               </Button>
@@ -113,7 +113,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white border-t border-gray-200 shadow-xl md:hidden">
+        <div className="absolute top-full left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-200/30 shadow-xl md:hidden">
           <nav className="px-4 py-4 space-y-2">
             <button
               onClick={() => scrollToSection('research')}

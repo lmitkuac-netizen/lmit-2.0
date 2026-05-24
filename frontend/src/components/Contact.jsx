@@ -42,15 +42,15 @@ const Contact = () => {
   }, []);
 
   return (
-    <section id="contact" className="py-20 bg-white" data-testid="contact-section">
+    <section id="contact" className="py-28 bg-white" data-testid="contact-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4" data-testid="contact-heading">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="contact-heading">
               Contact Us
             </h2>
-            <div className="w-24 h-1 bg-teal-600 mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <div className="heading-accent-bar"></div>
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
               Interested in collaboration, visiting our lab, or learning more about our research?
               We'd love to hear from you.
             </p>

@@ -75,7 +75,15 @@ module.exports = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+		fontSize: {
+			'display': ['clamp(2.5rem, 5vw, 4.5rem)', { lineHeight: '1.1', letterSpacing: '-0.03em', fontWeight: '800' }],
+			'heading': ['clamp(2rem, 3.5vw, 3.5rem)', { lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: '700' }],
+		},
+		letterSpacing: {
+			'apple-tight': '-0.03em',
+			'apple-heading': '-0.02em',
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
