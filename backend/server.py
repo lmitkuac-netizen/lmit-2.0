@@ -29,6 +29,19 @@ JWT_EXPIRY_HOURS = 24
 # Create the main app without a prefix
 app = FastAPI(title="Laboratory for Multiscale Innovative Technologies API")
 
+# Configure CORS
+origins = os.environ.get("CORS_ORIGINS", "").split(",")
+if not origins or origins == [""]:
+    origins = ["*"] # Fallback to allow all if not specified
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 admin_router = APIRouter(prefix="/api/admin")
