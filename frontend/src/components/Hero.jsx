@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import { useLabInfo } from '../context/LabInfoContext';
 import { motion } from 'framer-motion';
-import Hero3DScene from './Hero3DScene';
 
 const Hero = () => {
   const { labInfo, loading } = useLabInfo();
@@ -60,11 +59,6 @@ const Hero = () => {
       >
         <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px]"></div>
       </div>
-
-      {/* 3D Scene Interactive Overlay */}
-      <Suspense fallback={null}>
-        <Hero3DScene />
-      </Suspense>
 
       {/* Glowing Orbs for Premium Aesthetic */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
