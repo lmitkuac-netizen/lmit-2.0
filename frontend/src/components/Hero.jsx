@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import { useLabInfo } from '../context/LabInfoContext';
+import { motion } from 'framer-motion';
+import Hero3DScene from './Hero3DScene';
 
 const Hero = () => {
   const { labInfo, loading } = useLabInfo();
@@ -30,6 +32,19 @@ const Hero = () => {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } }
+  };
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       {/* Background Image with Parallax */}
@@ -46,6 +61,11 @@ const Hero = () => {
         <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px]"></div>
       </div>
 
+      {/* 3D Scene Interactive Overlay */}
+      <Suspense fallback={null}>
+        <Hero3DScene />
+      </Suspense>
+
       {/* Glowing Orbs for Premium Aesthetic */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-teal-500/15 rounded-full blur-[100px] animate-float-orb"></div>
@@ -54,22 +74,27 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pointer-events-none">
         {loading ? (
           <Loader2 className="w-12 h-12 text-white animate-spin mx-auto" />
         ) : labInfo ? (
-          <div className="space-y-6">
-            <h1 className="hero-stagger hero-stagger-1 text-gradient-hero !font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.03em] max-w-4xl mx-auto" data-testid="hero-title">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="space-y-6"
+          >
+            <motion.h1 variants={itemVariants} className="text-gradient-hero !font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.03em] max-w-4xl mx-auto" data-testid="hero-title">
               {labInfo.name}
-            </h1>
-            <p className="hero-stagger hero-stagger-2 text-xl sm:text-2xl md:text-3xl text-teal-300/90 font-light max-w-3xl mx-auto tracking-wide" data-testid="hero-tagline">
+            </motion.h1>
+            <motion.p variants={itemVariants} className="text-xl sm:text-2xl md:text-3xl text-teal-300/90 font-light max-w-3xl mx-auto tracking-wide" data-testid="hero-tagline">
               {labInfo.tagline}
-            </p>
-            <p className="hero-stagger hero-stagger-3 text-base sm:text-lg text-slate-300/80 max-w-3xl mx-auto leading-relaxed font-light" data-testid="hero-description">
+            </motion.p>
+            <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-300/80 max-w-3xl mx-auto leading-relaxed font-light" data-testid="hero-description">
               {labInfo.description}
-            </p>
+            </motion.p>
             
-            <div className="hero-stagger hero-stagger-4 pt-6">
+            <motion.div variants={itemVariants} className="pt-6 pointer-events-auto">
               <button
                 onClick={scrollToResearch}
                 data-testid="hero-cta-button"
@@ -78,8 +103,8 @@ const Hero = () => {
                 Explore Our Research
                 <ChevronDown className="transition-transform duration-300 group-hover:translate-y-1" size={20} />
               </button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         ) : null}
       </div>
 

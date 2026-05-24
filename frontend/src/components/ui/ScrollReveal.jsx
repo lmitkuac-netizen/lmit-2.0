@@ -1,43 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-export const ScrollReveal = ({ children, className = '', delay = 0 }) => {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { 
-        threshold: 0.05,
-        rootMargin: '0px 0px -50px 0px' // Trigger slightly before entering fully
-      }
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
+export const ScrollReveal = ({ children, className = '', delay = 0, yOffset = 50, direction = 'up' }) => {
+  // Determine starting position based on direction
+  const yStart = direction === 'up' ? yOffset : direction === 'down' ? -yOffset : 0;
+  const xStart = direction === 'left' ? yOffset : direction === 'right' ? -yOffset : 0;
 
   return (
-    <div
-      ref={ref}
-      className={`reveal-on-scroll ${isVisible ? 'is-visible' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: yStart, x: xStart }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        duration: 0.8, 
+        delay: delay / 1000, // framer-motion delay is in seconds
+        type: "spring",
+        bounce: 0.3,
+        stiffness: 50
+      }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
