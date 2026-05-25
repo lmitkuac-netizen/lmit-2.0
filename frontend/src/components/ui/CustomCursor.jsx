@@ -8,10 +8,10 @@ const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
-  // Apply smooth spring physics directly to values
-  const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
-  const smoothX = useSpring(cursorX, springConfig);
-  const smoothY = useSpring(cursorY, springConfig);
+  // Apply values directly without spring physics for 1:1 instant movement
+  // to prevent it from feeling "laggy" or sluggish.
+  // const smoothX = useSpring(cursorX, springConfig);
+  // const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     const updateMousePosition = (e) => {
@@ -72,7 +72,7 @@ const CustomCursor = () => {
   return (
     <motion.div
       className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
-      style={{ x: smoothX, y: smoothY }}
+      style={{ x: cursorX, y: cursorY }}
       variants={variants}
       animate={isHovering ? "hover" : "default"}
       transition={{ duration: 0.15 }}
