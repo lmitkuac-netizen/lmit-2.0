@@ -10,6 +10,13 @@ const Publications = () => {
   const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(4);
+  const [sortOrder, setSortOrder] = useState('newest');
+
+  const sortedPublications = [...publications].sort((a, b) => {
+    const yearA = parseInt(a.year) || 0;
+    const yearB = parseInt(b.year) || 0;
+    return sortOrder === 'newest' ? yearB - yearA : yearA - yearB;
+  });
 
   useEffect(() => {
     labApi.getPublications()
@@ -22,15 +29,29 @@ const Publications = () => {
     <section id="publications" className="py-28 bg-gray-50" data-testid="publications-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="publications-heading">
-              Publications
-            </h2>
-            <div className="heading-accent-bar"></div>
-            <p className="text-lg text-slate-500 max-w-3xl mx-auto font-light tracking-wide">
-              Our research contributions to advancing knowledge in materials science,
-              nanotechnology, and smart agriculture systems.
-            </p>
+          <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+            <div className="text-left md:text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-section mb-4 tracking-[-0.02em]" data-testid="publications-heading">
+                Publications
+              </h2>
+              <div className="heading-accent-bar mx-0 mb-4"></div>
+              <p className="text-lg text-slate-500 max-w-2xl font-light tracking-wide">
+                Our research contributions to advancing knowledge in materials science,
+                nanotechnology, and smart agriculture systems.
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-2 self-start md:self-end bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm">
+              <span className="text-sm text-slate-500 font-medium">Sort by:</span>
+              <select 
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="bg-transparent text-sm font-semibold text-slate-800 outline-none cursor-pointer focus:ring-0"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+              </select>
+            </div>
           </div>
         </ScrollReveal>
 
@@ -42,7 +63,7 @@ const Publications = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {publications.slice(0, visibleCount).map((pub, index) => (
+            {sortedPublications.slice(0, visibleCount).map((pub, index) => (
               <ScrollReveal key={pub.id} delay={(index % 2) * 150}>
                 <Card 
                   data-testid={`publication-card-${pub.id}`}
