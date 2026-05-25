@@ -88,16 +88,33 @@ const LabMembers = () => {
 
                       <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200">
                         {member.cv_url && (
-                          <a
-                            href={member.cv_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            onClick={() => {
+                              if (member.cv_url.startsWith('data:')) {
+                                // Modern browsers block opening data: URIs directly.
+                                // Convert to Blob and open via Object URL.
+                                const arr = member.cv_url.split(',');
+                                const mime = arr[0].match(/:(.*?);/)[1];
+                                const bstr = atob(arr[1]);
+                                let n = bstr.length;
+                                const u8arr = new Uint8Array(n);
+                                while (n--) {
+                                  u8arr[n] = bstr.charCodeAt(n);
+                                }
+                                const blob = new Blob([u8arr], { type: mime });
+                                const blobUrl = URL.createObjectURL(blob);
+                                window.open(blobUrl, '_blank');
+                                // Revoke later if possible, but for a new tab it's usually fine
+                              } else {
+                                window.open(member.cv_url, '_blank');
+                              }
+                            }}
                             className="inline-flex items-center gap-1.5 text-sm font-medium text-teal-700 hover:text-teal-800 transition-colors"
                             data-testid={`member-cv-${member.id}`}
                           >
                             <FileText size={18} />
                             View CV
-                          </a>
+                          </button>
                         )}
                         <a
                           href={`mailto:${member.email}`}
