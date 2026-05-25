@@ -1,28 +1,12 @@
 import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import { useLabInfo } from '../context/LabInfoContext';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Hero = () => {
   const { labInfo, loading } = useLabInfo();
-  const bgRef = useRef(null);
-  const [scrollY, setScrollY] = useState(0);
-
-  // Parallax scroll effect
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 300]);
 
   const scrollToResearch = () => {
     const element = document.getElementById('research');
@@ -47,18 +31,18 @@ const Hero = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       {/* Background Image with Parallax */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 bg-cover bg-center parallax-bg scale-110"
+      <motion.div
+        className="absolute inset-0 bg-cover bg-center parallax-bg"
         style={{
           backgroundImage: labInfo?.hero_background_image
             ? `url(${labInfo.hero_background_image})`
             : undefined,
-          transform: `translateY(${scrollY * 0.3}px) scale(1.1)`,
+          y,
+          scale: 1.1 // Static scale up to prevent edges showing during parallax
         }}
       >
-        <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px]"></div>
-      </div>
+        <div className="absolute inset-0 bg-slate-950/85"></div>
+      </motion.div>
 
       {/* Glowing Orbs for Premium Aesthetic */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
