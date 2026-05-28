@@ -31,9 +31,19 @@ const readFileAsDataUrl = (file) =>
 const getCroppedImg = async (image, pixelCrop, transparent = false) => {
   const canvas = document.createElement('canvas');
 
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+
+  const actualCrop = {
+    x: pixelCrop.x * scaleX,
+    y: pixelCrop.y * scaleY,
+    width: pixelCrop.width * scaleX,
+    height: pixelCrop.height * scaleY
+  };
+
   // Determine final dimensions (respect MAX_WIDTH)
-  let outW = pixelCrop.width;
-  let outH = pixelCrop.height;
+  let outW = actualCrop.width;
+  let outH = actualCrop.height;
   if (outW > MAX_WIDTH) {
     outH = Math.round((outH * MAX_WIDTH) / outW);
     outW = MAX_WIDTH;
@@ -50,7 +60,7 @@ const getCroppedImg = async (image, pixelCrop, transparent = false) => {
   
   ctx.drawImage(
     image,
-    pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height,
+    actualCrop.x, actualCrop.y, actualCrop.width, actualCrop.height,
     0, 0, outW, outH,
   );
   
