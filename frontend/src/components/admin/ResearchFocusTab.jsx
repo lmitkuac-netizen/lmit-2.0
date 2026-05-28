@@ -94,7 +94,7 @@ const ResearchFocusTab = () => {
           {items.map((r) => (
             <Card key={r.id} className="border-gray-200 overflow-hidden" data-testid={`research-admin-card-${r.id}`}>
               <div className="h-40 bg-gray-100 overflow-hidden">
-                <img src={r.image} alt={r.title} className="w-full h-full object-contain" />
+                <img src={r.image} alt={r.title} className="w-full h-full object-cover" />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-slate-800 mb-2">{r.title}</h3>
@@ -173,4 +173,5 @@ const ResearchFocusTab = () => {
 };
 
 export default ResearchFocusTab;
+
 

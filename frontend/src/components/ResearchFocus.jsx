@@ -62,7 +62,7 @@ const ResearchFocus = () => {
                       <img
                         src={focus.image}
                         alt={focus.title}
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                       <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white pr-4">
@@ -113,7 +113,7 @@ const ResearchFocus = () => {
                       <img 
                         src={selectedFocus.image} 
                         alt={selectedFocus.title}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -150,5 +150,6 @@ const ResearchFocus = () => {
 };
 
 export default ResearchFocus;
+
 
 

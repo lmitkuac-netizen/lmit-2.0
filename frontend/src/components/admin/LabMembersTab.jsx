@@ -152,7 +152,7 @@ const LabMembersTab = () => {
                             <GripVertical size={20} />
                           </div>
                           <div className={`w-12 h-12 rounded bg-gray-100 overflow-hidden flex-shrink-0 ${m.is_alumni ? 'grayscale' : ''}`}>
-                            <img src={m.image} alt={m.name} className="w-full h-full object-contain" />
+                            <img src={m.image} alt={m.name} className="w-full h-full object-cover" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -181,7 +181,7 @@ const LabMembersTab = () => {
                 </div>
               )}
               <div className="h-48 bg-gray-100 overflow-hidden relative">
-                <img src={m.image} alt={m.name} className={`w-full h-full object-contain ${m.is_alumni ? 'grayscale' : ''}`} />
+                <img src={m.image} alt={m.name} className={`w-full h-full object-cover ${m.is_alumni ? 'grayscale' : ''}`} />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-slate-800">{m.name}</h3>
@@ -315,4 +315,5 @@ const LabMembersTab = () => {
 };
 
 export default LabMembersTab;
+
 

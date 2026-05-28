@@ -89,7 +89,7 @@ const NewsTab = () => {
           {items.map((n) => (
             <Card key={n.id} className="border-gray-200 overflow-hidden" data-testid={`news-admin-card-${n.id}`}>
               <div className="h-40 bg-gray-100 overflow-hidden">
-                <img src={n.image} alt={n.title} className="w-full h-full object-contain" />
+                <img src={n.image} alt={n.title} className="w-full h-full object-cover" />
               </div>
               <CardContent className="p-4">
                 <div className="flex items-center gap-1 text-xs text-slate-500 mb-2">
@@ -166,4 +166,5 @@ const NewsTab = () => {
 };
 
 export default NewsTab;
+
 
