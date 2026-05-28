@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Calendar, Loader2, ArrowRight } from 'lucide-react';
 import { labApi } from '../services/api';
@@ -65,7 +65,7 @@ const News = () => {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
                       {index === 0 && (
@@ -103,7 +103,7 @@ const News = () => {
                       <img 
                         src={selectedNews.image} 
                         alt={selectedNews.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
                       <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-2 text-sm text-white/90">
@@ -133,3 +133,5 @@ const News = () => {
 };
 
 export default News;
+
+

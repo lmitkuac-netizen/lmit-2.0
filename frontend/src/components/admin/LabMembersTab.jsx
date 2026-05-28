@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
@@ -152,7 +152,7 @@ const LabMembersTab = () => {
                             <GripVertical size={20} />
                           </div>
                           <div className={`w-12 h-12 rounded bg-gray-100 overflow-hidden flex-shrink-0 ${m.is_alumni ? 'grayscale' : ''}`}>
-                            <img src={m.image} alt={m.name} className="w-full h-full object-cover" />
+                            <img src={m.image} alt={m.name} className="w-full h-full object-contain" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-slate-800 truncate flex items-center gap-2">
@@ -181,13 +181,13 @@ const LabMembersTab = () => {
                 </div>
               )}
               <div className="h-48 bg-gray-100 overflow-hidden relative">
-                <img src={m.image} alt={m.name} className={`w-full h-full object-cover ${m.is_alumni ? 'grayscale' : ''}`} />
+                <img src={m.image} alt={m.name} className={`w-full h-full object-contain ${m.is_alumni ? 'grayscale' : ''}`} />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-slate-800">{m.name}</h3>
                 <p className="text-sm text-teal-600 mb-2">{m.title}</p>
                 {m.is_alumni && m.current_workplace && (
-                  <p className="text-xs text-slate-600 mb-2 font-medium">🏢 {m.current_workplace}</p>
+                  <p className="text-xs text-slate-600 mb-2 font-medium">ðŸ¢ {m.current_workplace}</p>
                 )}
                 <p className="text-xs text-slate-500 mb-3 line-clamp-2">{m.bio}</p>
                 <div className="flex gap-2">
@@ -315,3 +315,4 @@ const LabMembersTab = () => {
 };
 
 export default LabMembersTab;
+

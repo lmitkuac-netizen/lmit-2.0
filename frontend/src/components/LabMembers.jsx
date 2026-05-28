@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Mail, Linkedin, GraduationCap, Loader2, FileText, Briefcase } from 'lucide-react';
 import { labApi } from '../services/api';
@@ -53,11 +53,11 @@ const LabMembers = () => {
                     data-testid={`member-card-${member.id}`}
                     className="group overflow-hidden border-gray-200 hover-card-glow h-full flex flex-col"
                   >
-                    <div className="relative h-80 overflow-hidden bg-gray-100">
+                    <div className="relative h-80 overflow-hidden bg-white">
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
 
@@ -78,7 +78,7 @@ const LabMembers = () => {
                           {member.research.map((topic, index) => (
                             <span 
                               key={index} 
-                              className="text-xs bg-gray-100 text-slate-700 px-2 py-1 rounded"
+                              className="text-xs bg-white text-slate-700 px-2 py-1 rounded"
                             >
                               {topic}
                             </span>
@@ -173,7 +173,7 @@ const LabMembers = () => {
                   {alumni.slice(0, visibleAlumniCount).map((member, index) => (
                     <ScrollReveal key={member.id} delay={(index % 4) * 100}>
                       <div 
-                        className="bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg p-4 flex flex-col transition-colors duration-200 h-full"
+                        className="bg-slate-50 hover:bg-white border border-slate-200 rounded-lg p-4 flex flex-col transition-colors duration-200 h-full"
                       >
                         <h4 className="font-semibold text-slate-800 flex items-center mb-1">
                           <GraduationCap className="w-4 h-4 mr-2 text-teal-600" />
@@ -196,7 +196,7 @@ const LabMembers = () => {
                       onClick={() => setVisibleAlumniCount(prev => prev + 12)}
                       className="text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors duration-200"
                     >
-                      Show More Alumni ⬇
+                      Show More Alumni â¬‡
                     </button>
                   </div>
                 )}
@@ -210,3 +210,5 @@ const LabMembers = () => {
 };
 
 export default LabMembers;
+
+
