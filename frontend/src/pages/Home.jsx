@@ -8,6 +8,7 @@ import VideoPreview from '../components/VideoPreview';
 import News from '../components/News';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import Preloader from '../components/ui/Preloader';
 
 /* Smooth SVG wave dividers between sections */
 const WaveDivider = ({ fromColor, toColor, flip = false }) => (
@@ -24,6 +25,7 @@ const WaveDivider = ({ fromColor, toColor, flip = false }) => (
 const Home = () => {
   return (
     <div className="min-h-screen">
+      <Preloader />
       <Header />
       <main>
         <Hero />
