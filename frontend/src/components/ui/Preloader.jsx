@@ -70,13 +70,13 @@ const Preloader = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="mt-6 flex flex-col items-center gap-2"
+                      className="mt-12 relative flex justify-center items-center"
                     >
-                      <div className="flex items-center gap-2 text-teal-400 text-sm font-medium tracking-wide">
-                        <div className="w-3 h-3 rounded-full border-2 border-teal-400 border-t-transparent animate-spin"></div>
-                        Waking up server...
-                      </div>
-                      <p className="text-slate-500 text-xs">This may take up to 50 seconds. Please wait.</p>
+                      {/* Cool futuristic concentric spinner */}
+                      <div className="absolute w-16 h-16 rounded-full border-t-2 border-l-2 border-teal-400/80 animate-spin" style={{ animationDuration: '3s' }}></div>
+                      <div className="absolute w-12 h-12 rounded-full border-b-2 border-r-2 border-teal-500/80 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                      <div className="absolute w-6 h-6 rounded-full border-t-2 border-r-2 border-teal-300 animate-spin" style={{ animationDuration: '1s' }}></div>
+                      <div className="absolute w-2 h-2 rounded-full bg-teal-400 animate-pulse"></div>
                     </motion.div>
                   )}
                 </AnimatePresence>
